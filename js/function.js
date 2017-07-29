@@ -115,35 +115,33 @@ $(document).ready(function () {
 		submitHandler: function(){
 			var dataString = $("form#AppointmentFrm").serialize();
 			$.ajax({
-			type: "POST",
-			url: "/api/correspondence/appointment/request",
-			cache: false,
-			data: dataString,
-			dataType : 'json', // data type
-			success:function(data){	
-				if(data.status==200)
-				{	
+				type: "POST",
+				url: "/api/correspondence/appointment/request",
+				cache: false,
+				data: dataString,
+				dataType : 'json', // data type
+				success:function(data, textStatus, xhr){
+					console.log(data);
+					console.log(xhr.status);
+					
 					$("#SuccessMessage").slideDown(500);
 					$("#SuccessMessage").html("<div class='alert alert-success'><strong>Success!</strong> Your message has been sent to us.</div>");
 					//document.getElementById("SuccessMessage").style.color='#FF0000';
 					//document.getElementById('AppointmentFrm').reset();
 					$("#AppointmentFrm")[0].reset();
 					return false;
-					
-				}
-				else
-				{
+				},
+				error: function (e) {
+					console.log(e);
 					$("#ErrorMessage").slideDown(500);
 					$("#ErrorMessage").html("<div class='alert alert-danger'><strong>Error!</strong> There was an error sending your message.</div>");
 					//document.getElementById("ErrorMessage").style.color='#FF0000';
 					//document.getElementById('AppointmentFrm').reset();
 					$("#AppointmentFrm")[0].reset();
 					return false;
-					
-				}
-			},
-			
-		}); 
+				},
+				
+			}); 
 		return false;
 		}
 	});

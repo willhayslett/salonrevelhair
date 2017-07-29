@@ -4,7 +4,13 @@ const express = require('express');
 const router = new express.Router();
 
 const nodemailer = require('nodemailer');
-let transporter = nodemailer.createTransport('smtps://salonrevelhair%40gmail.com:0b7t5Vxh2Ryj@smtp.gmail.com');
+let sgTransport = require('nodemailer-sendgrid-transport');
+let sgOptions = {
+	auth: {
+		api_key: process.env.SENDGRID_API_KEY,
+	}
+};
+let mailer = nodemailer.createTransport(sgTransport(sgOptions));
 
 
 
@@ -48,7 +54,7 @@ router.post('/', (req, res, next) => {
         Message: ${message}</br>`;
   text = `You've got a new inquiry from salonrevelhair.com. Details below: `;
 
-  console.log(html);
+  //console.log(html);
   let mailOptions = {
     from: "Webmaster @ Salon Revel ✔ <webmaster@salonrevelhair.com>", // sender address
     to: "salonrevel615@gmail.com", // list of receivers
@@ -58,12 +64,13 @@ router.post('/', (req, res, next) => {
     html: preHtml + html + postHtml// html body
   };
   // send mail with defined transport object
-  transporter.sendMail(mailOptions, function(error, info){
+  mailer.sendMail(mailOptions, function(error, info){
     if(error){
         return console.log(error);
     }
-    console.log('Message sent: ' + info.response);
-    res.status(200);
+    console.log('Message sent: ' + JSON.stringify(info));
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).send({success: 'message successfully sent'});
   });
 
   function getAppointmentDate(){
