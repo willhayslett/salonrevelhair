@@ -488,7 +488,7 @@ header {
 }
 .mapcont {
 	float: left;
-	width: 62%;
+	width: 70%;
 	position: relative;
 	padding-bottom: 38.7%;
 }
@@ -513,7 +513,7 @@ header {
 }
 .social {
 	float: right;
-	width: 38%;
+	width: 30%;
 	padding: 61px 40px 61px;
 }
 .social p {
@@ -1132,6 +1132,7 @@ h2.color {
 	padding: 5.2% 5%;
 }
 .mapcont {
+	width:60%;
 	padding-bottom: 33.5%;
 }
 .img-right {
@@ -1317,6 +1318,10 @@ textarea.form-control {
 .social {
 	width: 37%;
 	padding: 38px 20px;
+}
+
+.mapcont {
+	width: 60%;
 }
 .social-icon {
 	margin: 20px 0 0;

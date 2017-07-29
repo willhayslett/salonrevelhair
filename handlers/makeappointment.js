@@ -46,19 +46,20 @@ router.post('/', (req, res, next) => {
   //set our mail object attributes
   let subject = 'New Inquiry/Appointment Request From SalonRevelHair.com';
   html = `<b>You've got a new inquiry from salonrevelhair.com. Details below: <b>
-        </br></br>
-        Name: ${name}</br>
-        Email: ${email}</br>
-        Contact Number: ${contactNumber}</br>
-        Appointment Date: ` + getAppointmentDate() + `</br>
-        Message: ${message}</br>`;
+        <br/><br/>
+        Name: ${name}<br/>
+        Email: ${email}<br/>
+        Contact Number: ${contactNumber}<br/>
+        Appointment Date: ` + getAppointmentDate() + `<br/>
+        Message: ${message}<br/>`;
   text = `You've got a new inquiry from salonrevelhair.com. Details below: `;
 
   //console.log(html);
   let mailOptions = {
-    from: "Webmaster @ Salon Revel ✔ <webmaster@salonrevelhair.com>", // sender address
+    from: "Salon Revel Hair <webmaster@salonrevelhair.com>", // sender address
     to: "salonrevel615@gmail.com", // list of receivers
-    bcc: "will.hayslett@gmail.com",
+    cc: "grigsbylee4@gmail.com",
+    bcc: "will.hayslettjr@gmail.com",
     subject: subject, // Subject line
     text: text, // plaintext body
     html: preHtml + html + postHtml// html body
@@ -66,6 +67,7 @@ router.post('/', (req, res, next) => {
   // send mail with defined transport object
   mailer.sendMail(mailOptions, function(error, info){
     if(error){
+        res.status(500).send({failed: 'message not sent'});
         return console.log(error);
     }
     console.log('Message sent: ' + JSON.stringify(info));
